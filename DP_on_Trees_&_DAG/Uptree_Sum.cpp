@@ -51,11 +51,11 @@ long long nCr(int n, int r) {
 }
 
 vector<ll> dp;
-vector<ll> value;
 vector<vector<ll>> adjls;
+vector<ll> value;
 
 void dfs(ll node, ll parent){
-    dp[node] = value[node];
+    dp[node] = value[node]+dp[parent];
 
     for(auto child: adjls[node]){
         if(child == parent){
@@ -63,8 +63,6 @@ void dfs(ll node, ll parent){
         }
 
         dfs(child, node);
-
-        dp[node] += dp[child]; 
     }
 }
 
@@ -87,12 +85,13 @@ void solve(){
     }
 
     dp.resize(n+1, 0);
-    dfs(1, 0);
 
+    dfs(1, 0);
     for(ll i=1; i<=n; i++){
         cout << dp[i] << " ";
     }
     cout << endl;
+
 }
 
 #define fast ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
